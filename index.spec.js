@@ -45,4 +45,14 @@ describe("GET /users/1 ", () => {
         });
     });
   });
+
+  describe("if it fails ", () => {
+    it("if id is not number, returns 400 status code", (done) => {
+      request(app).get("/users/one").expect(400).end(done);
+    });
+
+    it("if we can not find information with id, returns 404 status code", (done) => {
+      request(app).get("/users/999").expect(404).end(done);
+    });
+  });
 });
