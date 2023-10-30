@@ -11,7 +11,20 @@ var users = [
 app.use(morgan("dev"));
 
 app.get("/users", (req, res) => {
-  res.json(users);
+  // req.query.limit is string like '2', you have to change it as number by using parseInt(str, 십진수)
+  req.query.limit = req.query.limit || 10;
+  const limit = parseInt(req.query.limit, 10);
+  if (Number.isNaN(limit)) {
+    // if limit is not number,
+    return res.status(400).end();
+  }
+  res.json(users.slice(0, limit)); // slice(index, limit) : index부터 limit - 1 index까지 배열을 반환.
+});
+
+app.get("/users/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const user = users.filter((user) => user.id === id)[0];
+  res.json(user);
 });
 
 const port = 3000;
