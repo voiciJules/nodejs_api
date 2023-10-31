@@ -1,10 +1,5 @@
 // api logic
-
-var users = [
-  { id: 1, name: "alice" },
-  { id: 2, name: "beck" },
-  { id: 3, name: "chris" },
-];
+const models = require("../../models");
 
 const index = function (req, res) {
   // req.query.limit is string like '2', you have to change it as number by using parseInt(str, 십진수)
@@ -14,7 +9,14 @@ const index = function (req, res) {
     // if limit is not number,
     return res.status(400).end();
   }
-  res.json(users.slice(0, limit)); // slice(index, limit) : index부터 limit - 1 index까지 배열을 반환.
+
+  models.User.findAll({
+    limit: limit,
+  }).then((users) => {
+    res.json(users);
+  });
+
+  // res.json(users.slice(0, limit)); // slice(index, limit) : index부터 limit - 1 index까지 배열을 반환.
 };
 
 const show = function (req, res) {
