@@ -70,3 +70,46 @@ describe("DELETE /users/:id ", () => {
     });
   });
 });
+
+describe("POST /users", () => {
+  describe("if it succeeds ", () => {
+    let name = "daniel",
+      body;
+
+    // before 부분을 통해서 아래 부분에 계속 반복되서 사용될 부분을 미리 정의해주는 것
+    before((done) => {
+      request(app)
+        .post("/users")
+        .send({ name })
+        .expect(201)
+        .end((err, res) => {
+          body = res.body;
+          done();
+        });
+    });
+
+    it("it returns created user object", (done) => {
+      body.should.have.property("id");
+      done();
+    });
+
+    it("it returns the created name", (done) => {
+      body.should.have.property("name", name);
+      done();
+    });
+  });
+
+  describe("if it fails ", () => {
+    it("if there is no name parameter, it returns 400 status code", (done) => {
+      request(app).post("/users").send({}).expect(400).end(done);
+    });
+
+    it("if the name is in the user list, it returns 409 status code", (done) => {
+      request(app)
+        .post("/users")
+        .send({ name: "daniel" })
+        .expect(409)
+        .end(done);
+    });
+  });
+});
