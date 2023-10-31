@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha index.spec.js",
-    "start": "node index.js"
+    "test": "NODE_ENV=test mocha api/user/user.spec.js",
+    "start": "node api/bin/www.js"
   },
   "author": "hojun.hwang",
   "license": "ISC",

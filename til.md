@@ -204,3 +204,9 @@ package.json의 test script 부분을 `mocha index.spec.js`로 바꾸어준다.
   name 이 없을 경우 400 응답
   없는 유저일 경우 404 응답
   이름이 중복일 경우 409 응답
+
+# 역할에 따른 파일 분리
+
+- api/user/index.js
+- api/user/user.ctrl.js
+- api/user/user.spec.js

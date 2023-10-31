@@ -1,4 +1,5 @@
-const app = require("./index");
+// test code
+const app = require("../../index");
 const should = require("should");
 const request = require("supertest");
 
