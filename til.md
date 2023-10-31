@@ -194,3 +194,13 @@ package.json의 test script 부분을 `mocha index.spec.js`로 바꾸어준다.
 - 실패시  
   name 파라미터 누락시 400을 반환한다  
   name 이 중복일 경우 409를 반환한다
+
+# PUT /users/:id
+
+- 성공시
+  변경된 name을 응답한다
+- 실패시
+  정수가 아닌 id일 경우 400 응답
+  name 이 없을 경우 400 응답
+  없는 유저일 경우 404 응답
+  이름이 중복일 경우 409 응답

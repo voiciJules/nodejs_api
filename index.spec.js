@@ -113,3 +113,44 @@ describe("POST /users", () => {
     });
   });
 });
+
+describe("PUT /users/:id", () => {
+  describe("if it succeeds", () => {
+    it("it returns the modified name", (done) => {
+      const name = "jules";
+      request(app)
+        .put("/users/2")
+        .send({ name })
+        .end((err, res) => {
+          res.body.should.have.property("name", name);
+          done();
+        });
+    });
+  });
+
+  describe("if it fails", () => {
+    it("if the id is not integer, it returns 400 status code", (done) => {
+      request(app).put("/users/two").expect(400).end(done);
+    });
+
+    it("if no name, it returns 400 status code", (done) => {
+      request(app).put("/users/2").send({}).expect(400).end(done);
+    });
+
+    it("if no id, it returns 404 status code", (done) => {
+      request(app)
+        .put("/users/999")
+        .send({ name: "foo" })
+        .expect(404)
+        .end(done);
+    });
+
+    it("if name is already in the user list, it returns 409 status code", (done) => {
+      request(app)
+        .put("/users/3")
+        .send({ name: "jules" })
+        .expect(409)
+        .end(done);
+    });
+  });
+});
