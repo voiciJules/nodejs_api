@@ -4,14 +4,13 @@ const should = require("should");
 const request = require("supertest");
 const models = require("../../models");
 
-describe.only("GET /users is ", () => {
+describe("GET /users is ", () => {
+  const users = [{ name: "alice" }, { name: "beck" }, { name: "chris" }];
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.User.bulkCreate(users));
   // 성공시,
   // 유저객체를 담은 배열로 응답한다.
   describe("if it succeeds, ", () => {
-    const users = [{ name: "alice" }, { name: "beck" }, { name: "chris" }];
-    before(() => models.sequelize.sync({ force: true }));
-    before(() => models.User.bulkCreate(users));
-
     it("it returns users' list", (done) => {
       request(app)
         .get("/users")
@@ -41,6 +40,9 @@ describe.only("GET /users is ", () => {
 });
 
 describe("GET /users/1 ", () => {
+  const users = [{ name: "alice" }, { name: "beck" }, { name: "chris" }];
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.User.bulkCreate(users));
   describe("if it succeeds ", () => {
     it("returns user object with id=1", (done) => {
       request(app)
@@ -64,6 +66,9 @@ describe("GET /users/1 ", () => {
 });
 
 describe("DELETE /users/:id ", () => {
+  const users = [{ name: "alice" }, { name: "beck" }, { name: "chris" }];
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.User.bulkCreate(users));
   describe("if it succeeds ", () => {
     it("it returns 204 status code", (done) => {
       request(app).delete("/users/1").expect(204).end(done);
@@ -78,6 +83,9 @@ describe("DELETE /users/:id ", () => {
 });
 
 describe("POST /users", () => {
+  const users = [{ name: "alice" }, { name: "beck" }, { name: "chris" }];
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.User.bulkCreate(users));
   describe("if it succeeds ", () => {
     let name = "daniel",
       body;
@@ -120,7 +128,11 @@ describe("POST /users", () => {
   });
 });
 
-describe("PUT /users/:id", () => {
+describe.only("PUT /users/:id", () => {
+  const users = [{ name: "alice" }, { name: "beck" }, { name: "chris" }];
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.User.bulkCreate(users));
+
   describe("if it succeeds", () => {
     it("it returns the modified name", (done) => {
       const name = "jules";
