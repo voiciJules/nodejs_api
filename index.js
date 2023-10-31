@@ -32,6 +32,15 @@ app.get("/users/:id", (req, res) => {
   res.json(user);
 });
 
+app.delete("/users/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (Number.isNaN(id)) {
+    return res.status(400).end();
+  }
+  users = users.filter((user) => user.id !== id);
+  res.status(204).end();
+});
+
 const port = 3000;
 app.listen(port, function () {
   console.log("Server is running");

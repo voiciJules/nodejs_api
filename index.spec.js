@@ -56,3 +56,17 @@ describe("GET /users/1 ", () => {
     });
   });
 });
+
+describe("DELETE /users/:id ", () => {
+  describe("if it succeeds ", () => {
+    it("it returns 204 status code", (done) => {
+      request(app).delete("/users/1").expect(204).end(done);
+    });
+  });
+
+  describe("if it fails", () => {
+    it("if id is not number, it returns 400 status code", (done) => {
+      request(app).delete("/users/one").expect(400).end(done);
+    });
+  });
+});
